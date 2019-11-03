@@ -41,7 +41,7 @@ const WbnPlayer = ({ match, history, location }) => {
       const newActiveVideo = state.videos.findIndex(
         video => video.id === videoId
       );
-      console.log(state.videos)
+      console.log(state)
       setState(prev => ({
         ...prev,
         activeVideo: prev.videos[newActiveVideo],
@@ -65,7 +65,19 @@ const WbnPlayer = ({ match, history, location }) => {
     setState(prevState => ({ ...prevState, nightMode: !prevState.nightMode}));
   };
 
-  const endCallback = () => {};
+  const endCallback = props => {
+    const videoId = props.match.params.activeVideo;
+    const currentVideoIndex = state.videos.findIndex(
+      video => video.id === videoId
+    );
+
+    const nextVideo = currentVideoIndex === state.videos.length -1 ? 0 : currentVideoIndex + 1;
+
+    props.history.push({
+      pathname: `${state.videos[nextVideo].id}`,
+      autoplay: false
+    })
+  };
 
   const progressCallback = () => {};
 
