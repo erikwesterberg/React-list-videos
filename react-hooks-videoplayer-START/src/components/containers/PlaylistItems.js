@@ -1,12 +1,14 @@
 import React from "react";
 import PlaylistItem from "../PlaylistItem";
 import StyledPlaylistItems from "../styles/StyledPlaylistitems";
-import Playlist from "./Playlist";
+import withLink from "../hoc/withLink";
+
+const PlaylistItemsWithLink = withLink(PlaylistItem)
 
 const Playlistitems = ({ videos, active }) => (
   <StyledPlaylistItems>
     {videos.map(video => (
-      <PlaylistItem
+      <PlaylistItemsWithLink
       key={video.id}
       video={video}
       active={video.id === active.id ? true : false}

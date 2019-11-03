@@ -41,6 +41,7 @@ const WbnPlayer = ({ match, history, location }) => {
       const newActiveVideo = state.videos.findIndex(
         video => video.id === videoId
       );
+      console.log(state.videos)
       setState(prev => ({
         ...prev,
         activeVideo: prev.videos[newActiveVideo],
