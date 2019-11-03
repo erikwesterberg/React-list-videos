@@ -26,13 +26,38 @@ const themeLight = {
 };
 
 const WbnPlayer = props => {
-  return (
-    <ThemeProvider theme={statement.nightMode ? theme : themeLight}>
+
+const nightModeCallback = () => {
+
+}
+
+const endCallback = () => {
+
+}
+
+const progressCallback = () => {
+
+}
+
+return (
+  <ThemeProvider theme={state.nightMode ? theme : themeLight}>
+    {state.videos !== null ? (
       <StyledWbnPlayer>
-      <Video />
-      <Playlist />
+        <Video
+          active={state.activeVideo}
+          autoplay={state.autoplay}
+          endCallback={endCallback}
+          progressCallback={progressCallback}
+        />
+        <Playlist
+          videos={state.videos}
+          active={state.activeVideo}
+          nightModeCallback={nightModeCallback}
+          nightMode={state.nightMode}
+        />
       </StyledWbnPlayer>
-    </ThemeProvider>
+    ) : null}
+  </ThemeProvider>
   );
 };
 
