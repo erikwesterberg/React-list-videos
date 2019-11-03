@@ -3,6 +3,7 @@ import Video from "../Video";
 import Playlist from "../containers/Playlist";
 import { ThemeProvider } from "styled-components";
 import { statement } from "@babel/template";
+import StyledWbnPlayer from "../styles/StyledWbnPlayer";
 
 const theme = {
   bgcolor: "#353535",
@@ -27,8 +28,10 @@ const themeLight = {
 const WbnPlayer = props => {
   return (
     <ThemeProvider theme={statement.nightMode ? theme : themeLight}>
+      <StyledWbnPlayer>
       <Video />
       <Playlist />
+      </StyledWbnPlayer>
     </ThemeProvider>
   );
 };
