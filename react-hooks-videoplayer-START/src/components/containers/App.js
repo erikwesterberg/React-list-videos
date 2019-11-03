@@ -1,5 +1,10 @@
 import React from "react";
+import WbnPLayer from "./WbnPlayer";
 
-const App = () => <div>Start here!</div>;
+const App = () => (
+  <>
+    <WbnPLayer />
+  </>
+);
 
 export default App;
