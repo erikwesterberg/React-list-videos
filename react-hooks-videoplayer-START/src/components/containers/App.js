@@ -1,13 +1,17 @@
 import React from "react";
 import WbnPLayer from "./WbnPlayer";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import GlobalStyle from "../styles/GlobalStyle";
 
 const App = () => (
   <BrowserRouter>
-    <Switch>
-      <Route exact path="/" component={WbnPLayer} />
-      <Route exact path="/:activeVideo" component={WbnPLayer} />
-    </Switch>
+    <>
+      <Switch>
+        <Route exact path="/" component={WbnPLayer} />
+        <Route exact path="/:activeVideo" component={WbnPLayer} />
+      </Switch>
+      <GlobalStyle />
+    </>
   </BrowserRouter>
 );
 
