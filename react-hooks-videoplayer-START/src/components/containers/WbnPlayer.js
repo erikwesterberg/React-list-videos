@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Video from "../Video";
 import Playlist from "../containers/Playlist";
 import { ThemeProvider } from "styled-components";
-import { statement } from "@babel/template";
 import StyledWbnPlayer from "../styles/StyledWbnPlayer";
 
 const theme = {
@@ -25,49 +24,67 @@ const themeLight = {
   color: "#353535"
 };
 
-const WbnPlayer = props => {
-
-  const videos = JSON.parse(document.querySelector('[name="videos"]').value)
+const WbnPlayer = ({ match, history, location }) => {
+  const videos = JSON.parse(document.querySelector('[name="videos"]').value);
 
   const [state, setState] = useState({
     videos: videos.playlist,
     activeVideo: videos.playlist[0],
     nightMode: true,
     playlistId: videos.playlistId,
-    autoplay: false,
-  })
+    autoplay: false
+  });
 
-const nightModeCallback = () => {
+  useEffect(() => {
+    const videoId = match.params.activeVideo;
+    if (videoId !== undefined) {
+      const newActiveVideo = state.videos.findIndex(
+        video => video.id === videoId
+      );
+      setState(prev => ({
+        ...prev,
+        activeVideo: prev.videos[newActiveVideo],
+        autoplay: location.autoplay
+      }));
+    } else {
+      history.push({
+        pathname: `/${state.activeVideo.id}`,
+        autoplay: false
+      });
+    }
+  }, [
+    history,
+    location.autoplay,
+    match.params.activeVideo,
+    state.activeVideo.id,
+    state.videos,
+  ]);
 
-}
+  const nightModeCallback = () => {};
 
-const endCallback = () => {
+  const endCallback = () => {};
 
-}
+  const progressCallback = () => {};
 
-const progressCallback = () => {
-
-}
-
-return (
-  <ThemeProvider theme={state.nightMode ? theme : themeLight}>
-    {state.videos !== null ? (
-      <StyledWbnPlayer>
-        <Video
-          active={state.activeVideo}
-          autoplay={state.autoplay}
-          endCallback={endCallback}
-          progressCallback={progressCallback}
-        />
-        <Playlist
-          videos={state.videos}
-          active={state.activeVideo}
-          nightModeCallback={nightModeCallback}
-          nightMode={state.nightMode}
-        />
-      </StyledWbnPlayer>
-    ) : null}
-  </ThemeProvider>
+  return (
+    <ThemeProvider theme={state.nightMode ? theme : themeLight}>
+      {state.videos !== null ? (
+        <StyledWbnPlayer>
+          <Video
+            active={state.activeVideo}
+            autoplay={state.autoplay}
+            endCallback={endCallback}
+            progressCallback={progressCallback}
+          />
+          <Playlist
+            videos={state.videos}
+            active={state.activeVideo}
+            nightModeCallback={nightModeCallback}
+            nightMode={state.nightMode}
+          />
+        </StyledWbnPlayer>
+      ) : null}
+    </ThemeProvider>
   );
 };
 
